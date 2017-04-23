@@ -1,0 +1,152 @@
+<head>
+  <title>neuralcircuit</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.9/select2-bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    {{> container}}
+  </div>
+</body>
+
+<template name="container">
+  <div class="row">
+    {{> input}}
+    {{> output}}
+    {{> truthtable}}
+  </div>
+  <div class="row">
+    {{> network}}
+  </div>
+</template>
+
+<template name="truthtable">
+  <div class="col-sm-4">
+    <h2>Truth table</h2>
+
+    {{#if inputsAndOutputs}}
+
+    <table class="table" style="width: auto;">
+
+      <thead>
+        <tr>
+          {{#each inputs}}
+            <th class="text-center">{{@index}}</th>
+          {{/each}}
+          {{#each outputs}}
+            <th class="text-center">{{@index}}</th>
+          {{/each}}
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each rows}}
+          <tr>
+            {{#each this}}
+              {{#if indexIsLast @index ..}}
+
+                <td class="text-center input-td left-border">{{this}}</td>
+              {{else}}
+                <td class="text-center input-td">{{this}}</td>
+              {{/if}}
+            {{/each}}
+            {{#each outputs}}
+              <td class="text-center output-td"><input class="output form-control" type="text" value=0></td>
+            {{/each}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <button id="generate-network" class="btn btn-primary">Generate network</button>
+
+    {{else}}
+      <p>Not enough inputs or outputs.</p>
+    {{/if}}
+
+  </div>
+</template>
+
+<template name="output">
+  <div class="col-sm-4">
+    <h2>Outputs</h2>
+    <div class="form-group">
+      <label for="output">Choose output</label>
+      <div class="input-group">
+        <select id="output" class="form-control">
+          <option></option>
+          <option>FRET signal</option>
+          <option>Enzyme activity</option>
+        </select>
+        <span class="input-group-btn">
+          <button class="btn btn-success" id="add-output">Add</button>
+        </span>
+      </div>
+    </div>
+
+    {{#if outputs.count}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each outputs}}
+            <tr>
+              <td>{{@index}}</td>
+              <td>{{name}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+
+  </div>
+</template>
+
+<template name="input">
+  <div class="col-sm-4">
+    <h2>Inputs</h2>
+    <div class="form-group">
+      <label for="input">Choose input</label>
+      <div class="input-group">
+        <select id="input" class="form-control">
+          <option></option>
+          <option>Protein 1</option>
+          <option>Protein 2</option>
+        </select>
+        <span class="input-group-btn">
+          <button class="btn btn-success" id="add-input">Add</button>
+        </span>
+      </div>
+    </div>
+
+    {{#if inputs.count ..}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each inputs}}
+            <tr>
+              <td>{{@index}}</td>
+              <td>{{name}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  </div>
+</template>
+
+<template name="network">
+  <div class="col-sm-12">
+    <div id="drawing"></div>
+  </div>
+</template>

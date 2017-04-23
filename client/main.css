@@ -1,0 +1,22 @@
+/*select {
+  height: 34px;
+}*/
+
+
+.output {
+  display: block; padding: 10px; margin: 0; border: 0; width: 30px;
+  text-align: center;
+}
+
+.output-td {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.input-td {
+  padding: 7px 10px !important;
+}
+
+.left-border {
+  border-right: 2px solid #ddd;
+}
